@@ -26,6 +26,7 @@ class Boy:
     def draw(self):
         self.image.clip_draw(self.frame * 100, 0, 100, 100, self.x, self.y)
 
+
 class Large_Ball:
     def __init__(self):
         self.x, self.y = random.randint(0, 750), 599
@@ -33,12 +34,13 @@ class Large_Ball:
         self.frame = 0
 
     def update(self):
-        self.y -= random.randint(5,30)
-        if self.y < 81 or self.y == 81:
-            self.y = 81
+        self.y -= random.randint(5, 30)
+        if self.y < 71 or self.y == 71:
+            self.y = 71
 
     def draw(self):
-        self.image.clip_draw(self.frame, 0, 100, 100, self.x, self.y)
+        self.image.clip_draw(self.frame, 0, 100, 100, self.x, self.y, 41, 41)
+
 
 class Small_Ball:
     def __init__(self):
@@ -47,12 +49,13 @@ class Small_Ball:
         self.frame = 0
 
     def update(self):
-        self.y -= random.randint(5,30)
-        if self.y < 81 or self.y == 81:
-            self.y = 81
+        self.y -= random.randint(5, 30)
+        if self.y < 61 or self.y == 61:
+            self.y = 61
 
     def draw(self):
-        self.image.clip_draw(self.frame, 0, 100, 100, self.x, self.y)
+        self.image.clip_draw(self.frame, 0, 100, 100, self.x, self.y, 21, 21)
+
 
 def handle_events():
     global running
@@ -79,12 +82,14 @@ def reset_world():
     team = [Boy() for i in range(10)]
     world += team
 
-    large_ball_int = random.randint(1,19)
+    large_ball_int = random.randint(1, 19)
     small_ball_int = 20 - large_ball_int
     large_ball = [Large_Ball() for j in range(large_ball_int)]
     small_ball = [Small_Ball() for k in range(small_ball_int)]
     world += large_ball
     world += small_ball
+
+
 def update_world():
     for o in world:
         o.update()
