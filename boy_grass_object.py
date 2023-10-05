@@ -48,8 +48,8 @@ class Small_Ball:
 
     def update(self):
         self.y -= random.randint(5,30)
-        if self.y < 61 or self.y == 61:
-            self.y = 61
+        if self.y < 81 or self.y == 81:
+            self.y = 81
 
     def draw(self):
         self.image.clip_draw(self.frame, 0, 100, 100, self.x, self.y)
@@ -79,9 +79,12 @@ def reset_world():
     team = [Boy() for i in range(10)]
     world += team
 
-     
-    large_ball = [Large_Ball() for j in range(20)]
+    large_ball_int = random.randint(1,19)
+    small_ball_int = 20 - large_ball_int
+    large_ball = [Large_Ball() for j in range(large_ball_int)]
+    small_ball = [Small_Ball() for k in range(small_ball_int)]
     world += large_ball
+    world += small_ball
 def update_world():
     for o in world:
         o.update()
