@@ -1,14 +1,17 @@
 from pico2d import *
 import random
+
+
 # Game object class here
 class Grass:
-    def __init__(self): #self 자세한 설명 생략, 생성이된 객체를 가리키는 변수
+    def __init__(self):  # self 자세한 설명 생략, 생성이된 객체를 가리키는 변수
         self.image = load_image('grass.png')
 
     def draw(self):
-        self.image.draw(400,30)
+        self.image.draw(400, 30)
 
-    def update(self): pass
+    def update(self): pass  # 더미함수를 넣어서 world의 update가 한번에 진행될 수 있도록 더미 코드 작성
+
 
 class Boy:
     def __init__(self):
@@ -17,11 +20,12 @@ class Boy:
         self.image = load_image('run_animation.png')
 
     def update(self):
-        self.frame = random.randint(0,7)
+        self.frame = random.randint(0, 7)
         self.x += 5
 
     def draw(self):
-        self.image.clip_draw(self.frame * 100, 0 , 100, 100, self.x, self.y)
+        self.image.clip_draw(self.frame * 100, 0, 100, 100, self.x, self.y)
+
 
 def handle_events():
     global running
@@ -31,25 +35,35 @@ def handle_events():
             running = False
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             running = False
+
+
 def reset_world():
     global running
     global grass
     global team
+    global world
     running = True
-    grass = Grass() # grass 객체 변수, Grass() 클래스
+    world = []
+
+    grass = Grass()  # grass 객체 변수, Grass() 클래스
+    world.append(grass)
+
     team = [Boy() for i in range(10)]
+    world += team
+
+
 def update_world():
-    grass.update()
-    for boy in team:
-        boy.update()
+    for o in world:
+        o.update()
     pass
+
 
 def render_world():
     clear_canvas()
-    grass.draw() # 여러개의 오브젝트를 진행할 떄 그리는 순서 중요!
-    for boy in team:
-        boy.draw()
+    for o in world:
+        o.draw()
     update_canvas()
+
 
 open_canvas()
 # initialization code
@@ -57,11 +71,10 @@ reset_world()
 
 # game main loop code
 while running:
-    handle_events() # 핸들과 업데이트가 일종의 게임 로직
+    handle_events()  # 핸들과 업데이트가 일종의 게임 로직
     update_world()
     render_world()
     delay(0.05)
-
 
 # finalization code
 
